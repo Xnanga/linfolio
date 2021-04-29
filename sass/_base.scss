@@ -1,0 +1,55 @@
+// SASS Variables
+
+// // Breakpoints
+// $bp-max: 125em; // 2000px
+// $bp-largest: 87.5em; // 1400px
+// $bp-large: 68.75em; // 1100px
+// $bp-medium: 62.5em; // 1000px
+// $bp-small: 50em; // 800px
+// $bp-smaller: 40.625em; // 650px
+// $bp-smallest: 31.25em; // 500px
+
+// CSS Variables
+
+:root {
+  // Fonts
+  --default-font-style: "Ubuntu", sans-serif;
+
+  // Colours
+  --color-dark-grey: #1d1d1d;
+}
+
+// Reset
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: var(--default-font-style);
+  line-height: 1;
+  color: var(--default-font-color);
+}
+
+button {
+  padding: 0;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  background: none;
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
