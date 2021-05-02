@@ -1,4 +1,4 @@
-<!-- App Built by Jamie Peutherer | https://github.com/Xnanga/listo/ -->
+<!-- App Built by Jamie Peutherer | https://github.com/Xnanga/linfolio -->
 
 <!DOCTYPE html>
 
@@ -30,22 +30,29 @@
   </head>
   <body>
     <div class="top-strip">
+      <div class="activities-btn">
+        <span class="activities-btn__label">Activities</span>
+      </div>
       <div class="tab-container">
         <div class="tab tab--active">
           <img src="icons/361-user.png" alt="#" class="icon tab__icon" />
           <span class="tab__label">About Me</span>
+          <img src="icons/cancel-circle.png" alt="" class="icon tab__cross">
         </div>
         <div class="tab">
           <img src="icons/246-folder.png" alt="#" class="icon tab__icon" />
           <span class="tab__label">My Portfolio</span>
+          <img src="icons/cancel-circle.png" alt="" class="icon tab__cross">
         </div>
         <div class="tab">
           <img src="icons/165-layers.png" alt="#" class="icon tab__icon" />
           <span class="tab__label">My Skills</span>
+          <img src="icons/cancel-circle.png" alt="" class="icon tab__cross">
         </div>
         <div class="tab">
           <img src="icons/356-paper plane.png" alt="#" class="icon tab__icon" />
           <span class="tab__label">Contact Me</span>
+          <img src="icons/cancel-circle.png" alt="" class="icon tab__cross">
         </div>
       </div>
       <div class="date-time">
@@ -60,21 +67,59 @@
       </div>
     </div>
     <nav class="side-menu">
-      <div class="side-menu__btn">
+      <div id="about" class="side-menu__btn">
         <img src="icons/361-user.png" alt="#" class="side-menu__icon" />
       </div>
-      <div class="side-menu__btn">
+      <div id="portfolio" class="side-menu__btn">
         <img src="icons/246-folder.png" alt="#" class="side-menu__icon" />
       </div>
-      <div class="side-menu__btn">
+      <div id="skills" class="side-menu__btn">
         <img src="icons/165-layers.png" alt="#" class="side-menu__icon" />
       </div>
-      <div class="side-menu__btn">
+      <div id="contact" class="side-menu__btn">
         <img src="icons/356-paper plane.png" alt="#" class="side-menu__icon" />
       </div>
-      <div class="side-menu__btn side-menu__btn--show-applications">
-        <img src="icons/314-menu.png" alt="#" class="side-menu__icon" />
       </nav>
+    </div>
+    <div class="window-container">
+      <!-- <div class="window">
+        <div class="window__header">
+          <div class="window__header-bar">
+            <span>C:\home\jamie\about</span>
+          </div>
+          <div class="window__header-btns">
+            <img src="icons/minus.png" alt="" class="window-btn">
+            <img src="icons/cancel-circle.png" alt="" class="window-btn">
+          </div>
+        </div>
+        <div class="window__main">
+          <h1>Hi there! I'm Jamie Peutherer</h1>
+          <p>I'm a self-taught frontend web developer with a strong background in technical Search Engine Optimisation (7+ years in the field!).</p>
+          <p>I like to build all sorts of odd websites and apps, especially webapp recreations of other tools and programs (<strong>like Ubuntu Linux!</strong>)</p>
+          <p>I'm still learning more and more about good web development every day (<i>Who doesn't have more to learn?</i>), but I'm eager to jump right into a professional role real soon.</p>
+          <p>You can find quick links to the most important stuff below - otherwise, feel free to click around and explore.</p>
+          <div class="quicklink-grid">
+            <div class="quicklink-grid__item">
+              <span>CV</span>
+            </div>
+            <div class="quicklink-grid__item">
+              <span>Portfolio</span>
+            </div>
+            <div class="quicklink-grid__item">
+              <span>Skills</span>
+            </div>
+            <div class="quicklink-grid__item">
+              <span>Github</span>
+            </div>
+            <div class="quicklink-grid__item">
+              <span>LinkedIn</span>
+            </div>
+            <div class="quicklink-grid__item">
+              <span>Contact</span>
+            </div>
+          </div>
+        </div>
+      </div> -->
     </div>
   </body>
 </html>

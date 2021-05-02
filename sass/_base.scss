@@ -1,5 +1,7 @@
 // SASS Variables
 
+$background-light-white: rgba(#ffffff, 0.1);
+
 // // Breakpoints
 // $bp-max: 125em; // 2000px
 // $bp-largest: 87.5em; // 1400px
@@ -14,10 +16,15 @@
 :root {
   // Fonts
   --default-font-style: "Ubuntu", sans-serif;
+  --default-font-color: #ffffff;
 
   // Colours
   --color-dark-grey: #1d1d1d;
+  --color-light-grey: #343434;
   --color-orange-highlight: #eb6637;
+
+  // Backgrounds
+  --background-light-white: rgba(#ffffff, 0.1);
 }
 
 // Reset
