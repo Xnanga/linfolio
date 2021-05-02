@@ -1,6 +1,7 @@
 :root {
   --default-font-style: "Ubuntu", sans-serif;
-  --color-dark-grey: #1d1d1d; }
+  --color-dark-grey: #1d1d1d;
+  --color-orange-highlight: #eb6637; }
 
 *,
 *::after,
@@ -39,28 +40,61 @@ p {
   justify-content: space-between;
   width: 100%;
   height: 3rem;
-  padding: 0 1rem;
   background-color: var(--color-dark-grey);
   color: #ffffff;
   font-size: 1.5rem; }
 
-.active-tab {
+.tab-container {
   align-self: flex-start;
   height: 100%;
   display: flex;
   align-items: center; }
 
-.date-time {
-  align-self: center;
-  height: 100%;
+.tab {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem; }
+  .tab:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+  .tab--active {
+    border-bottom: 3px solid var(--color-orange-highlight); }
+  .tab__icon {
+    margin-right: 0.75rem;
+    pointer-events: none; }
+  .tab__label {
+    pointer-events: none; }
+
+.date-time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 10.5rem;
+  pointer-events: none; }
 
 .icon-tray {
   align-self: flex-end;
   height: 100%;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  padding-right: 1rem;
+  padding-top: 3px;
+  border-bottom: 3px solid transparent;
+  opacity: 0.85; }
+  .icon-tray > * {
+    margin-left: 1rem; }
+  .icon-tray:active, .icon-tray:focus {
+    border-bottom: 3px solid var(--color-orange-highlight); }
+  .icon-tray:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+
+.icon {
+  height: 1.75rem;
+  width: 1.75rem; }
 
 .side-menu {
   position: fixed;
@@ -71,18 +105,19 @@ p {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 10rem;
+  width: 8rem;
   padding-top: 4rem;
   padding-bottom: 1rem;
-  background-color: rgba(29, 29, 29, 0.75); }
+  background-color: rgba(29, 29, 29, 0.5); }
   .side-menu > *:not(:first-child) {
     margin-top: 2.5rem; }
   .side-menu__btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 8.75rem;
-    height: 8.75rem;
+    width: 7rem;
+    height: 7rem;
+    padding: 1rem;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.1s; }
@@ -91,11 +126,11 @@ p {
     .side-menu__btn--show-applications {
       margin-top: auto !important; }
   .side-menu__icon {
-    height: 7rem;
-    width: 7rem; }
+    height: 6rem;
+    width: 6rem; }
 
 body {
-  height: calc(100vh - 2rem);
+  height: 100vh;
   width: 100%;
   background: url("../imgs/full-size-ubuntu-bg.jpg");
   background-repeat: no-repeat;
