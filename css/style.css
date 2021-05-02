@@ -1,7 +1,10 @@
 :root {
   --default-font-style: "Ubuntu", sans-serif;
+  --default-font-color: #ffffff;
   --color-dark-grey: #1d1d1d;
-  --color-orange-highlight: #eb6637; }
+  --color-light-grey: #343434;
+  --color-orange-highlight: #eb6637;
+  --background-light-white: rgba(#ffffff, 0.1); }
 
 *,
 *::after,
@@ -44,26 +47,58 @@ p {
   color: #ffffff;
   font-size: 1.5rem; }
 
+.activities-btn {
+  align-self: flex-start;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
+  padding-top: 3px;
+  border-bottom: 3px solid transparent;
+  transition: all 0.1s; }
+  .activities-btn__label {
+    pointer-events: none; }
+  .activities-btn:active, .activities-btn:focus {
+    border-bottom: 3px solid var(--color-orange-highlight); }
+  .activities-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+
 .tab-container {
   align-self: flex-start;
   height: 100%;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  margin-right: auto; }
 
 .tab {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 1rem; }
+  padding: 0 1rem;
+  transition: all 0.2s; }
+  .tab > * {
+    margin-right: 0.75rem; }
   .tab:hover {
     background-color: rgba(255, 255, 255, 0.1); }
   .tab--active {
+    padding-top: 3px;
     border-bottom: 3px solid var(--color-orange-highlight); }
   .tab__icon {
-    margin-right: 0.75rem;
     pointer-events: none; }
   .tab__label {
     pointer-events: none; }
+  .tab__cross {
+    display: none;
+    opacity: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden; }
+    .tab__cross:hover {
+      background-color: var(--color-orange-highlight); }
+  .tab:hover > .tab__cross {
+    display: block;
+    opacity: 1; }
 
 .date-time {
   position: absolute;
@@ -84,7 +119,8 @@ p {
   padding-right: 1rem;
   padding-top: 3px;
   border-bottom: 3px solid transparent;
-  opacity: 0.85; }
+  opacity: 0.85;
+  transition: all 0.1s; }
   .icon-tray > * {
     margin-left: 1rem; }
   .icon-tray:active, .icon-tray:focus {
@@ -121,13 +157,86 @@ p {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.1s; }
+    .side-menu__btn > img {
+      pointer-events: none; }
     .side-menu__btn:hover {
       background-color: rgba(255, 255, 255, 0.1); }
-    .side-menu__btn--show-applications {
-      margin-top: auto !important; }
   .side-menu__icon {
     height: 6rem;
     width: 6rem; }
+
+.window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  background-color: var(--color-light-grey);
+  overflow: hidden;
+  border: 1px solid #000000;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75); }
+  .window__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    padding: 1rem;
+    background-color: var(--color-dark-grey); }
+  .window__header-bar {
+    display: flex;
+    align-items: center;
+    height: 3.5rem;
+    width: 80%;
+    padding-left: 1rem;
+    border-radius: 5px;
+    background-color: var(--color-light-grey);
+    pointer-events: none; }
+  .window__header-btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    opacity: 0.9;
+    transition: all 0.1s;
+    cursor: pointer; }
+    .window__header-btns > img {
+      margin-left: 1rem; }
+    .window__header-btns :last-child:hover {
+      background-color: var(--color-orange-highlight); }
+  .window__main {
+    padding: 3rem 12.5rem; }
+
+.window-btn {
+  height: 3rem;
+  width: 3rem;
+  padding: 0.5rem;
+  border-radius: 50%; }
+  .window-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1); }
+
+.quicklink-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+  min-height: 10rem;
+  margin: 2rem 0; }
+  .quicklink-grid__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-dark-grey);
+    border: 1px solid #000000;
+    transition: all 0.1s;
+    cursor: pointer; }
+    .quicklink-grid__item > span {
+      pointer-events: none; }
+    .quicklink-grid__item:hover {
+      background-color: rgba(255, 255, 255, 0.1); }
 
 body {
   height: 100vh;
@@ -137,5 +246,13 @@ body {
   background-position: top;
   background-size: cover; }
 
+.window-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding-top: 3rem;
+  padding-left: 8rem; }
+
 h1 {
-  font-family: inherit; }
+  font-family: inherit;
+  margin: 2.5rem 0; }
