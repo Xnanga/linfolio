@@ -32,8 +32,8 @@ const createWindow = function (pagePath, contentHTML) {
         <span>${pagePath}</span>
       </div>
       <div class="window__header-btns">
-        <img src="icons/minus.png" alt="" class="window-btn">
-        <img src="icons/cancel-circle.png" alt="" class="window-btn">
+        <img src="icons/minus.png" alt="" class="window-btn minimise-btn">
+        <img src="icons/cancel-circle.png" alt="" class="window-btn close-btn">
       </div>
     </div>
     <div class="window__main">
@@ -45,14 +45,42 @@ const createWindow = function (pagePath, contentHTML) {
   windowContainer.insertAdjacentHTML("beforeend", windowHTML);
 };
 
+const createTab = function (tabInfoObj) {
+  // console.log(tabInfoObj);
+  const tabContainer = document.querySelector(".tab-container");
+  const tabHTML = `
+  <div class="tab tab--active">
+    <img src="${tabInfoObj.src}" alt="${tabInfoObj.alt}" class="icon tab__icon" />
+    <span class="tab__label">${tabInfoObj.text}</span>
+    <img src="icons/cancel-circle.png" alt="" class="icon tab__cross">
+  </div>
+  `;
+  tabContainer.insertAdjacentHTML("beforeend", tabHTML);
+};
+
+const removeTab = function (removedWindow) {
+  let tabIdentifier;
+  const allTabs = document.querySelectorAll(".tab");
+  const windowAddressBarText = removedWindow.querySelector(
+    ".window__header-bar"
+  ).textContent;
+
+  if (windowAddressBarText.includes("about")) tabIdentifier = "About";
+  if (windowAddressBarText.includes("portfolio")) tabIdentifier = "Portfolio";
+  if (windowAddressBarText.includes("skills")) tabIdentifier = "Skills";
+  if (windowAddressBarText.includes("contact")) tabIdentifier = "Contact";
+
+  allTabs.forEach((tab) => {
+    if (tab.textContent.includes(tabIdentifier)) tab.outerHTML = "";
+  });
+};
+
 // Events
 
 const topBarEventHandler = function (e) {
   const clickedEl = e.target;
   const topBar = document.querySelector(".top-strip");
   if (clickedEl === topBar) return;
-
-  console.log(clickedEl);
 };
 
 const sideBarEventHandler = function (e) {
@@ -64,21 +92,41 @@ const sideBarEventHandler = function (e) {
   if (clickedEl.id === "portfolio") prepareWindowContent("portfolio");
   if (clickedEl.id === "skills") prepareWindowContent("skills");
   if (clickedEl.id === "contact") prepareWindowContent("contact");
+};
 
-  console.log(clickedEl);
+const windowEventHandler = function (e) {
+  const clickedEl = e.target;
+
+  // Close Window & Tab
+  if (clickedEl.classList.contains("close-btn")) {
+    const activeWindow = clickedEl.closest(".window");
+    removeTab(activeWindow);
+    closeWindow(activeWindow);
+  }
+
+  // Minimise Window
+  if (clickedEl.classList.contains("minimise-btn")) {
+    const activeWindow = clickedEl.closest(".window");
+    minimiseWindow(activeWindow);
+  }
 };
 
 const setUpEventListeners = function () {
   const topbar = document.querySelector(".top-strip");
   const sidebar = document.querySelector(".side-menu");
+  const windowContainer = document.querySelector(".window-container");
 
   topbar.addEventListener("click", topBarEventHandler);
   sidebar.addEventListener("click", sideBarEventHandler);
+  windowContainer.addEventListener("click", windowEventHandler);
 };
 
 // Logic
 
 const prepareWindowContent = function (windowName) {
+  // Check for Existing Windows
+  const windowOpen = checkWindowExists(windowName);
+
   // About Content
   const aboutPagePath = `C:\\home\\jamie\\about`;
   const aboutHTMLContent = `<h1>Hi there! I'm Jamie Peutherer</h1>
@@ -115,7 +163,53 @@ const prepareWindowContent = function (windowName) {
   // Contact Content
 
   // Send to UI
-  if (windowName === "about") createWindow(aboutPagePath, aboutHTMLContent);
+  if (windowName === "about" && windowOpen === false) {
+    createWindow(aboutPagePath, aboutHTMLContent);
+    prepareTabContent(windowName);
+  }
+};
+
+const prepareTabContent = function (windowName) {
+  const tabIndex = ["about", "portfolio", "skills", "contact"];
+  const tabValues = [
+    {
+      src: "icons/361-user.png",
+      text: "About Me",
+      alt: "User Icon",
+    },
+    {
+      src: "icons/361-user.png",
+      text: "My Portfolio",
+      alt: "Folder Icon",
+    },
+    {
+      src: "icons/361-user.png",
+      text: "My Skills",
+      alt: "Tech Stack Icon",
+    },
+    {
+      src: "icons/361-user.png",
+      text: "Contact Me",
+      alt: "Paper Plane Icon",
+    },
+  ];
+  const tabIndexNumber = tabIndex.indexOf(windowName);
+  createTab(tabValues[tabIndexNumber]);
+};
+
+const checkWindowExists = function (windowName) {
+  let flag = false;
+  const windowExists = document
+    ?.querySelector(".window__header-bar")
+    ?.textContent?.includes(windowName);
+  if (windowExists) flag = true;
+  return flag;
+};
+
+const closeWindow = (activeWindow) => (activeWindow.innerHTML = "");
+
+const minimiseWindow = function (activeWindow) {
+  console.log(`This window will be minimised: ${activeWindow}`);
 };
 
 const getCurrentTime = function () {
