@@ -45,7 +45,8 @@ p {
   height: 3rem;
   background-color: var(--color-dark-grey);
   color: #ffffff;
-  font-size: 1.5rem; }
+  font-size: 1.5rem;
+  user-select: none; }
 
 .activities-btn {
   align-self: flex-start;
@@ -108,8 +109,15 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 10.5rem;
-  pointer-events: none; }
+  height: 100%;
+  width: 12.5rem;
+  padding-top: 3px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 3px solid transparent;
+  cursor: default; }
+  .date-time:active, .date-time:focus {
+    border-bottom: 3px solid var(--color-orange-highlight); }
 
 .icon-tray {
   align-self: flex-end;
@@ -119,10 +127,10 @@ p {
   padding-right: 1rem;
   padding-top: 3px;
   border-bottom: 3px solid transparent;
-  opacity: 0.85;
   transition: all 0.1s; }
   .icon-tray > * {
-    margin-left: 1rem; }
+    margin-left: 1rem;
+    opacity: 0.8; }
   .icon-tray:active, .icon-tray:focus {
     border-bottom: 3px solid var(--color-orange-highlight); }
   .icon-tray:hover {
@@ -144,7 +152,8 @@ p {
   width: 8rem;
   padding-top: 4rem;
   padding-bottom: 1rem;
-  background-color: rgba(29, 29, 29, 0.5); }
+  background-color: rgba(29, 29, 29, 0.5);
+  user-select: none; }
   .side-menu > *:not(:first-child) {
     margin-top: 2.5rem; }
   .side-menu__btn {
@@ -171,6 +180,7 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
+  width: 50%;
   background-color: var(--color-light-grey);
   overflow: hidden;
   border: 1px solid #000000;
@@ -244,7 +254,8 @@ body {
   background: url("../imgs/full-size-ubuntu-bg.jpg");
   background-repeat: no-repeat;
   background-position: top;
-  background-size: cover; }
+  background-size: cover;
+  overflow: hidden; }
 
 .window-container {
   position: relative;

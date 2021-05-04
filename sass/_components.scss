@@ -16,6 +16,8 @@
   color: #ffffff;
 
   font-size: 1.5rem;
+
+  user-select: none;
 }
 
 .activities-btn {
@@ -117,9 +119,19 @@
   align-items: center;
   justify-content: space-between;
 
-  min-width: 10.5rem;
+  height: 100%;
+  width: 12.5rem;
+  padding-top: 3px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-bottom: 3px solid transparent;
 
-  pointer-events: none;
+  cursor: default;
+
+  &:active,
+  &:focus {
+    border-bottom: 3px solid var(--color-orange-highlight);
+  }
 }
 
 .icon-tray {
@@ -134,12 +146,11 @@
 
   border-bottom: 3px solid transparent;
 
-  opacity: 0.85;
-
   transition: all 0.1s;
 
   & > * {
     margin-left: 1rem;
+    opacity: 0.8;
   }
 
   &:active,
@@ -174,6 +185,8 @@
   padding-bottom: 1rem;
 
   background-color: rgba(#1d1d1d, 0.5);
+
+  user-select: none;
 
   & > *:not(:first-child) {
     margin-top: 2.5rem;
@@ -216,6 +229,8 @@
   transform: translate(-50%, -50%);
 
   font-size: 2rem;
+
+  width: 50%;
 
   background-color: var(--color-light-grey);
 
