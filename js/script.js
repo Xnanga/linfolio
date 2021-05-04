@@ -24,9 +24,9 @@ const updateDate = function () {
   topBarDate.textContent = currentDate;
 };
 
-const createWindow = function (pagePath, contentHTML) {
+const createWindow = function (pagePath, contentHTML, id) {
   const windowContainer = document.querySelector(".window-container");
-  const windowHTML = `<div class="window">
+  const windowHTML = `<div class="window" data-id="${id}">
     <div class="window__header">
       <div class="window__header-bar">
         <span>${pagePath}</span>
@@ -46,10 +46,9 @@ const createWindow = function (pagePath, contentHTML) {
 };
 
 const createTab = function (tabInfoObj) {
-  // console.log(tabInfoObj);
   const tabContainer = document.querySelector(".tab-container");
   const tabHTML = `
-  <div class="tab tab--active">
+  <div id="${tabInfoObj.id}" class="tab tab--active">
     <img src="${tabInfoObj.src}" alt="${tabInfoObj.alt}" class="icon tab__icon" />
     <span class="tab__label">${tabInfoObj.text}</span>
     <img src="icons/cancel-circle.png" alt="" class="icon tab__cross">
@@ -59,19 +58,11 @@ const createTab = function (tabInfoObj) {
 };
 
 const removeTab = function (removedWindow) {
-  let tabIdentifier;
+  let tabIdentifier = removedWindow.dataset.id;
   const allTabs = document.querySelectorAll(".tab");
-  const windowAddressBarText = removedWindow.querySelector(
-    ".window__header-bar"
-  ).textContent;
-
-  if (windowAddressBarText.includes("about")) tabIdentifier = "About";
-  if (windowAddressBarText.includes("portfolio")) tabIdentifier = "Portfolio";
-  if (windowAddressBarText.includes("skills")) tabIdentifier = "Skills";
-  if (windowAddressBarText.includes("contact")) tabIdentifier = "Contact";
 
   allTabs.forEach((tab) => {
-    if (tab.textContent.includes(tabIdentifier)) tab.outerHTML = "";
+    if (tab.id.includes(tabIdentifier)) tab.outerHTML = "";
   });
 };
 
@@ -81,6 +72,21 @@ const topBarEventHandler = function (e) {
   const clickedEl = e.target;
   const topBar = document.querySelector(".top-strip");
   if (clickedEl === topBar) return;
+
+  // Close Window & Tab
+  if (clickedEl.classList.contains("tab__cross")) {
+    let activeWindow;
+    const parentTab = clickedEl.closest(".tab");
+    const identifier = parentTab.id;
+    const allWindows = document.querySelectorAll(".window");
+    allWindows.forEach((window) =>
+      identifier.includes(window.dataset.id) ? (activeWindow = window) : window
+    );
+    if (activeWindow) {
+      removeTab(activeWindow);
+      closeWindow(activeWindow);
+    }
+  }
 };
 
 const sideBarEventHandler = function (e) {
@@ -157,14 +163,41 @@ const prepareWindowContent = function (windowName) {
     `;
 
   // Portfolio Content
+  const portfolioPagePath = `C:\\home\\jamie\\portfolio`;
+  const portfolioHTMLContent = `<h1>Some of my Past Projects</h1>
+    <p>TEST</p>
+    `;
 
   // Skills Content
+  const skillsPagePath = `C:\\home\\jamie\\skills-tools`;
+  const skillsHTMLContent = `<h1>My Skills & Tools I'm Familiar With</h1>
+    <p>TEST</p>
+    `;
 
   // Contact Content
+  const contactPagePath = `C:\\home\\jamie\\contact`;
+  const contactHTMLContent = `<h1>Get in Touch</h1>
+    <p>TEST</p>
+    `;
 
   // Send to UI
   if (windowName === "about" && windowOpen === false) {
-    createWindow(aboutPagePath, aboutHTMLContent);
+    createWindow(aboutPagePath, aboutHTMLContent, "about");
+    prepareTabContent(windowName);
+  }
+
+  if (windowName === "portfolio" && windowOpen === false) {
+    createWindow(portfolioPagePath, portfolioHTMLContent, "portfolio");
+    prepareTabContent(windowName);
+  }
+
+  if (windowName === "skills" && windowOpen === false) {
+    createWindow(skillsPagePath, skillsHTMLContent, "skills");
+    prepareTabContent(windowName);
+  }
+
+  if (windowName === "contact" && windowOpen === false) {
+    createWindow(contactPagePath, contactHTMLContent, "contact");
     prepareTabContent(windowName);
   }
 };
@@ -176,21 +209,25 @@ const prepareTabContent = function (windowName) {
       src: "icons/361-user.png",
       text: "About Me",
       alt: "User Icon",
+      id: "about-tab",
     },
     {
-      src: "icons/361-user.png",
+      src: "icons/246-folder.png",
       text: "My Portfolio",
       alt: "Folder Icon",
+      id: "portfolio-tab",
     },
     {
-      src: "icons/361-user.png",
+      src: "icons/165-layers.png",
       text: "My Skills",
       alt: "Tech Stack Icon",
+      id: "skills-tab",
     },
     {
-      src: "icons/361-user.png",
+      src: "icons/356-paper plane.png",
       text: "Contact Me",
       alt: "Paper Plane Icon",
+      id: "contact-tab",
     },
   ];
   const tabIndexNumber = tabIndex.indexOf(windowName);
@@ -199,14 +236,15 @@ const prepareTabContent = function (windowName) {
 
 const checkWindowExists = function (windowName) {
   let flag = false;
-  const windowExists = document
-    ?.querySelector(".window__header-bar")
-    ?.textContent?.includes(windowName);
-  if (windowExists) flag = true;
+  const allWindows = document.querySelectorAll(".window");
+  allWindows.forEach((window) => {
+    if (window.dataset.id === windowName) flag = true;
+  });
+
   return flag;
 };
 
-const closeWindow = (activeWindow) => (activeWindow.innerHTML = "");
+const closeWindow = (activeWindow) => (activeWindow.outerHTML = "");
 
 const minimiseWindow = function (activeWindow) {
   console.log(`This window will be minimised: ${activeWindow}`);
