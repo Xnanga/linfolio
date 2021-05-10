@@ -4,6 +4,8 @@ const init = function () {
   setInterval(updateDate, 1000);
   setInterval(updateTime, 1000);
   setUpEventListeners();
+
+  prepareWindowContent("about");
 };
 
 // UI
@@ -69,6 +71,16 @@ const removeTab = function (removedWindow) {
   });
 };
 
+const expandCard = function (clickedBtn) {
+  const activeCard = clickedBtn.closest(".card");
+  const expandableContent = activeCard.querySelector(".card__content");
+  expandableContent.classList.toggle("card__content--expanded");
+
+  clickedBtn.textContent === "[+]"
+    ? (clickedBtn.textContent = "[-]")
+    : (clickedBtn.textContent = "[+]");
+};
+
 // Events
 
 const topBarEventHandler = function (e) {
@@ -103,7 +115,7 @@ const sideBarEventHandler = function (e) {
   if (clickedEl.id === "contact") prepareWindowContent("contact");
 };
 
-const windowEventHandler = function (e) {
+const windowClickEventHandler = function (e) {
   const clickedEl = e.target;
 
   // Close Window & Tab
@@ -118,6 +130,21 @@ const windowEventHandler = function (e) {
     const activeWindow = clickedEl.closest(".window");
     minimiseWindow(activeWindow);
   }
+
+  // Quicklink buttons
+  if (clickedEl.id === "portfolio-btn") prepareWindowContent("portfolio");
+  if (clickedEl.id === "skills-btn") prepareWindowContent("skills");
+  if (clickedEl.id === "contact-btn") prepareWindowContent("contact");
+
+  // Card expand buttons
+  if (clickedEl.classList.contains("card__expand-btn")) expandCard(clickedEl);
+};
+
+const windowMouseDownEventHandler = function (e) {
+  const clickedEl = e.target;
+
+  // Push active window to front
+  switchWindowZIndex(clickedEl.closest(".window"));
 };
 
 const setUpEventListeners = function () {
@@ -127,7 +154,8 @@ const setUpEventListeners = function () {
 
   topbar.addEventListener("click", topBarEventHandler);
   sidebar.addEventListener("click", sideBarEventHandler);
-  windowContainer.addEventListener("click", windowEventHandler);
+  windowContainer.addEventListener("click", windowClickEventHandler);
+  windowContainer.addEventListener("mousedown", windowMouseDownEventHandler);
 };
 
 // Logic
@@ -137,48 +165,124 @@ const prepareWindowContent = function (windowName) {
   const windowOpen = checkWindowExists(windowName);
 
   // About Content
-  const aboutPagePath = `C:\\home\\jamie\\about`;
+  const aboutPagePath = `\\home\\jamie\\about`;
   const aboutHTMLContent = `<h1>Hi there! I'm Jamie Peutherer</h1>
     <p>I'm a self-taught frontend web developer with a strong background in technical Search Engine Optimisation (7+ years in the field!).</p>
     <p>I like to build all sorts of odd websites and apps, especially webapp recreations of other tools and programs (<strong>like Ubuntu Linux!</strong>)</p>
     <p>I'm still learning more and more about good web development every day (<i>Who doesn't have more to learn?</i>), but I'm eager to jump right into a professional role real soon.</p>
     <p>You can find quick links to the most important stuff below - otherwise, feel free to click around and explore.</p>
     <div class="quicklink-grid">
-      <div class="quicklink-grid__item">
+      <div class="quicklink-grid__item" id="cv-btn">
         <span>CV</span>
       </div>
-      <div class="quicklink-grid__item">
+      <div class="quicklink-grid__item" id="portfolio-btn">
         <span>Portfolio</span>
       </div>
-      <div class="quicklink-grid__item">
+      <div class="quicklink-grid__item" id="skills-btn">
         <span>Skills</span>
       </div>
-      <div class="quicklink-grid__item">
+      <a href="https://github.com/Xnanga" target="_blank">
+      <div class="quicklink-grid__item" id="github-btn">
         <span>Github</span>
       </div>
-      <div class="quicklink-grid__item">
-        <span>LinkedIn</span>
-      </div>
-      <div class="quicklink-grid__item">
+      </a>
+      <a href="https://www.linkedin.com/in/jamiepeutherer/" target="_blank">
+        <div class="quicklink-grid__item" id="linkedin-btn">
+          <span>LinkedIn</span>
+        </div>
+      </a>
+      <div class="quicklink-grid__item" id="contact-btn">
         <span>Contact</span>
       </div>
     </div>
     `;
 
   // Portfolio Content
-  const portfolioPagePath = `C:\\home\\jamie\\portfolio`;
-  const portfolioHTMLContent = `<h1>Some of my Past Projects</h1>
-    <p>TEST</p>
+  const portfolioPagePath = `\\home\\jamie\\portfolio`;
+  const portfolioHTMLContent = `<h1>Portfolio</h1>
+    <p>Below are some of the projects I've put together that I think showcase what I can do best. You can find even more over on my Github page.</p>
+    <div class="card-container">
+      <div class="card">
+      <div class="card__title">
+        <h2>PropertySearchr: Responsive Modern Website Homepage</h2>
+        <button class="card__expand-btn">[+]</button>
+      </div>
+        <span class="card__tools">HTML, SASS, Vanilla JS</span>
+        <div class="card__content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Donec et imperdiet est, ut bibendum mauris. Pellentesque in ligula mollis, viverra est eu, bibendum augue.</p>
+          <p>Vivamus interdum, sapien sit amet feugiat venenatis, leo mauris tempus justo, ut fermentum nisl odio at metus. </p>
+          <p>Nullam nunc ex, laoreet vitae eros a, ullamcorper fermentum metus. Aliquam ut orci nec diam pretium mattis in ac justo. </p>
+          <p>Integer non arcu semper, porta ipsum non, tristique elit. Aliquam viverra neque id tincidunt mattis. </p>
+        </div>
+      </div>
+      <div class="card">
+      <div class="card__title">
+        <h2>PropertySearchr: Responsive Modern Website Homepage</h2>
+        <button class="card__expand-btn">[+]</button>
+      </div>
+        <span class="card__tools">HTML, SASS, Vanilla JS</span>
+        <div class="card__content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Donec et imperdiet est, ut bibendum mauris. Pellentesque in ligula mollis, viverra est eu, bibendum augue.</p>
+          <p>Vivamus interdum, sapien sit amet feugiat venenatis, leo mauris tempus justo, ut fermentum nisl odio at metus. </p>
+          <p>Nullam nunc ex, laoreet vitae eros a, ullamcorper fermentum metus. Aliquam ut orci nec diam pretium mattis in ac justo. </p>
+          <p>Integer non arcu semper, porta ipsum non, tristique elit. Aliquam viverra neque id tincidunt mattis. </p>
+        </div>
+      </div>
+      <div class="card">
+      <div class="card__title">
+        <h2>PropertySearchr: Responsive Modern Website Homepage</h2>
+        <button class="card__expand-btn">[+]</button>
+      </div>
+        <span class="card__tools">HTML, SASS, Vanilla JS</span>
+        <div class="card__content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Donec et imperdiet est, ut bibendum mauris. Pellentesque in ligula mollis, viverra est eu, bibendum augue.</p>
+          <p>Vivamus interdum, sapien sit amet feugiat venenatis, leo mauris tempus justo, ut fermentum nisl odio at metus. </p>
+          <p>Nullam nunc ex, laoreet vitae eros a, ullamcorper fermentum metus. Aliquam ut orci nec diam pretium mattis in ac justo. </p>
+          <p>Integer non arcu semper, porta ipsum non, tristique elit. Aliquam viverra neque id tincidunt mattis. </p>
+        </div>
+      </div>
+      <div class="card">
+      <div class="card__title">
+        <h2>PropertySearchr: Responsive Modern Website Homepage</h2>
+        <button class="card__expand-btn">[+]</button>
+      </div>
+        <span class="card__tools">HTML, SASS, Vanilla JS</span>
+        <div class="card__content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Donec et imperdiet est, ut bibendum mauris. Pellentesque in ligula mollis, viverra est eu, bibendum augue.</p>
+          <p>Vivamus interdum, sapien sit amet feugiat venenatis, leo mauris tempus justo, ut fermentum nisl odio at metus. </p>
+          <p>Nullam nunc ex, laoreet vitae eros a, ullamcorper fermentum metus. Aliquam ut orci nec diam pretium mattis in ac justo. </p>
+          <p>Integer non arcu semper, porta ipsum non, tristique elit. Aliquam viverra neque id tincidunt mattis. </p>
+        </div>
+      </div>
+      <div class="card">
+      <div class="card__title">
+        <h2>PropertySearchr: Responsive Modern Website Homepage</h2>
+        <button class="card__expand-btn">[+]</button>
+      </div>
+        <span class="card__tools">HTML, SASS, Vanilla JS</span>
+        <div class="card__content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Donec et imperdiet est, ut bibendum mauris. Pellentesque in ligula mollis, viverra est eu, bibendum augue.</p>
+          <p>Vivamus interdum, sapien sit amet feugiat venenatis, leo mauris tempus justo, ut fermentum nisl odio at metus. </p>
+          <p>Nullam nunc ex, laoreet vitae eros a, ullamcorper fermentum metus. Aliquam ut orci nec diam pretium mattis in ac justo. </p>
+          <p>Integer non arcu semper, porta ipsum non, tristique elit. Aliquam viverra neque id tincidunt mattis. </p>
+        </div>
+      </div>
+    </div>
     `;
 
   // Skills Content
-  const skillsPagePath = `C:\\home\\jamie\\skills-tools`;
+  const skillsPagePath = `\\home\\jamie\\skills-tools`;
   const skillsHTMLContent = `<h1>My Skills & Tools I'm Familiar With</h1>
     <p>TEST</p>
     `;
 
   // Contact Content
-  const contactPagePath = `C:\\home\\jamie\\contact`;
+  const contactPagePath = `\\home\\jamie\\contact`;
   const contactHTMLContent = `<h1>Get in Touch</h1>
     <p>TEST</p>
     `;
@@ -203,6 +307,11 @@ const prepareWindowContent = function (windowName) {
     createWindow(contactPagePath, contactHTMLContent, "contact");
     prepareTabContent(windowName);
   }
+
+  // Push window to front
+  const allActiveWindows = document.querySelectorAll(".window");
+  const newestWindow = allActiveWindows[allActiveWindows.length - 1];
+  switchWindowZIndex(newestWindow);
 };
 
 const prepareTabContent = function (windowName) {
@@ -274,7 +383,15 @@ const getCurrentDate = function () {
   return formattedDate;
 };
 
-// Make Element Draggable
+const switchWindowZIndex = function (activeWindow) {
+  const allWindows = document.querySelectorAll(".window");
+
+  allWindows.forEach((window) => {
+    window === activeWindow
+      ? window.classList.add("window--active")
+      : window.classList.remove("window--active");
+  });
+};
 
 function dragElement(el) {
   let pos1 = 0,
