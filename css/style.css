@@ -34,6 +34,14 @@ p {
   font-size: 1.5rem;
   margin: 1rem 0; }
 
+a,
+a:hover,
+a:active,
+a:visited,
+a:focus {
+  color: inherit;
+  text-decoration: none; }
+
 .top-strip {
   position: fixed;
   top: 0;
@@ -110,11 +118,12 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  width: 12.5rem;
+  width: 14rem;
   padding-top: 3px;
   padding-left: 1rem;
   padding-right: 1rem;
   border-bottom: 3px solid transparent;
+  white-space: nowrap;
   cursor: default; }
   .date-time:active, .date-time:focus {
     border-bottom: 3px solid var(--color-orange-highlight); }
@@ -180,7 +189,8 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
-  width: 50%;
+  height: 80%;
+  width: 60%;
   background-color: var(--color-light-grey);
   overflow: hidden;
   border: 1px solid #000000;
@@ -216,7 +226,11 @@ p {
     .window__header-btns :last-child:hover {
       background-color: var(--color-orange-highlight); }
   .window__main {
-    padding: 3rem 12.5rem; }
+    height: calc(100% - 3.5rem);
+    padding: 4rem 11.5rem;
+    overflow-y: scroll; }
+  .window--active {
+    z-index: 4; }
 
 .window-btn {
   height: 3rem;
@@ -248,6 +262,31 @@ p {
     .quicklink-grid__item:hover {
       background-color: rgba(255, 255, 255, 0.1); }
 
+.card {
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: var(--color-dark-grey); }
+  .card__title {
+    display: flex; }
+    .card__title > button {
+      order: 1;
+      width: 2.5rem; }
+    .card__title > h2 {
+      order: 2;
+      margin-left: 0.75rem; }
+  .card__tools {
+    display: inline-block;
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    font-style: italic; }
+  .card__expand-btn {
+    cursor: pointer; }
+  .card__content {
+    height: 0;
+    overflow: hidden; }
+    .card__content--expanded {
+      height: auto; }
+
 body {
   height: 100vh;
   width: 100%;
@@ -264,6 +303,16 @@ body {
   padding-top: 3rem;
   padding-left: 8rem; }
 
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 1.5rem; }
+
 h1 {
   font-family: inherit;
   margin: 2.5rem 0; }
+
+h2 {
+  font-family: inherit;
+  font-size: 2.25rem; }
