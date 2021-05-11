@@ -197,6 +197,10 @@ a:focus {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75); }
+  .window__small {
+    max-height: 47.5rem; }
+    .window__small > .window__main {
+      overflow-y: auto; }
   .window__header {
     display: flex;
     align-items: center;
@@ -227,7 +231,7 @@ a:focus {
       background-color: var(--color-orange-highlight); }
   .window__main {
     height: calc(100% - 3.5rem);
-    padding: 4rem 11.5rem;
+    padding: 3rem 11.5rem;
     overflow-y: scroll; }
   .window--active {
     z-index: 4; }
@@ -286,6 +290,23 @@ a:focus {
     overflow: hidden; }
     .card__content--expanded {
       height: auto; }
+  .card__flex {
+    display: flex;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem; }
+    .card__flex > :not(:first-child) {
+      margin-left: 1.5rem; }
+  .card__flex-item {
+    height: 7.5rem;
+    width: 7.5rem; }
+  .card__img {
+    height: 100%;
+    width: 100%;
+    transition: all 0.15s ease-in; }
+    .card__img--circular {
+      border-radius: 50%; }
+    .card__img:hover {
+      transform: scale(1.1); }
 
 body {
   height: 100vh;

@@ -5,7 +5,7 @@ const init = function () {
   setInterval(updateTime, 1000);
   setUpEventListeners();
 
-  prepareWindowContent("about");
+  // prepareWindowContent("about");
 };
 
 // UI
@@ -27,6 +27,32 @@ const updateDate = function () {
 const createWindow = function (pagePath, contentHTML, id) {
   const windowContainer = document.querySelector(".window-container");
   const windowHTML = `<div class="window" data-id="${id}">
+    <div class="window__header">
+      <div class="window__header-bar">
+        <span>${pagePath}</span>
+      </div>
+      <div class="window__header-btns">
+        <img src="icons/minus.png" alt="" class="window-btn minimise-btn">
+        <img src="icons/cancel-circle.png" alt="" class="window-btn close-btn">
+      </div>
+    </div>
+    <div class="window__main">
+    ${contentHTML}
+      </div>
+  </div>
+    `;
+
+  windowContainer.insertAdjacentHTML("beforeend", windowHTML);
+
+  // Make new window draggable
+  const allWindows = document.querySelectorAll(".window");
+  const newestWindow = allWindows[allWindows.length - 1];
+  dragElement(newestWindow);
+};
+
+const createSmallWindow = function (pagePath, contentHTML, id) {
+  const windowContainer = document.querySelector(".window-container");
+  const windowHTML = `<div class="window window__small" data-id="${id}">
     <div class="window__header">
       <div class="window__header-bar">
         <span>${pagePath}</span>
@@ -80,6 +106,66 @@ const expandCard = function (clickedBtn) {
     ? (clickedBtn.textContent = "[-]")
     : (clickedBtn.textContent = "[+]");
 };
+
+const closeWindow = (activeWindow) => (activeWindow.outerHTML = "");
+
+const minimiseWindow = function (activeWindow) {
+  console.log(`This window will be minimised: ${activeWindow}`);
+};
+
+const switchWindowZIndex = function (activeWindow) {
+  const allWindows = document.querySelectorAll(".window");
+
+  allWindows.forEach((window) => {
+    window === activeWindow
+      ? window.classList.add("window--active")
+      : window.classList.remove("window--active");
+  });
+};
+
+function dragElement(el) {
+  let pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
+  if (el.querySelector(".window__header")) {
+    // if present, the header is where you move the DIV from:
+    el.querySelector(".window__header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    el.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    el.style.top = el.offsetTop - pos2 + "px";
+    el.style.left = el.offsetLeft - pos1 + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
 
 // Events
 
@@ -277,8 +363,139 @@ const prepareWindowContent = function (windowName) {
 
   // Skills Content
   const skillsPagePath = `\\home\\jamie\\skills-tools`;
-  const skillsHTMLContent = `<h1>My Skills & Tools I'm Familiar With</h1>
-    <p>TEST</p>
+  const skillsHTMLContent = `<h1>Skills & Tech I'm Familiar With</h1>
+    <p>Below are web languages, tools, CMSs, and more I know a thing or two about.</p>
+    <div class="card-container">
+      <div class="card">
+        <h2>Languages & Frameworks</h2>
+        <div class="card__flex">
+          <div class="card__flex-item">
+            <a href="https://en.wikipedia.org/wiki/HTML5" title="HTML5" target="_blank">
+              <img src="svg/html5-logo.svg" class="card__img" />
+            </a>
+          </div>
+          <div class="card__flex-item">
+            <a href="https://en.wikipedia.org/wiki/CSS" title="CSS3" target="_blank">
+              <img src="svg/css3-logo.svg" class="card__img" />
+            </a>
+          </div>
+          <div class="card__flex-item">
+            <a href="https://sass-lang.com/" title="SASS/SCSS" target="_blank">
+              <img src="svg/sass-logo.svg" class="card__img" />
+            </a>
+          </div>
+          <div class="card__flex-item">
+            <a href="https://en.wikipedia.org/wiki/JavaScript" title="JavaScript" target="_blank">
+              <img src="svg/javascript-logo.svg" class="card__img" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+      <h2>Tools & Programs</h2>
+      <div class="card__flex">
+        <div class="card__flex-item">
+          <a href="https://www.npmjs.com/" title="NPM" target="_blank">
+            <img src="svg/npm-logo.svg" class="card__img" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://git-scm.com/" title="Git" target="_blank">
+            <img src="svg/git-logo.svg" class="card__img" />
+          </a>
+          </div>
+        <div class="card__flex-item">
+          <a href="https://github.com/" title="Github" target="_blank">
+            <img src="svg/github-logo.svg" class="card__img" style="fill: #ffffff"/>
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://code.visualstudio.com/" title="Visual Studio Code" target="_blank">
+            <img src="svg/visual-studio-code-logo.svg" class="card__img" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://parceljs.org/" title="Parcel Bundler" target="_blank">
+            <img src="imgs/parceljs-logo.jpg" class="card__img card__img--circular" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://www.screamingfrog.co.uk/seo-spider/" title="Screaming Frog" target="_blank">
+            <img src="imgs/sf-logo.jpg" class="card__img card__img--circular" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card">
+        <h2>Content Management Systems</h2>
+        <div class="card__flex">
+          <div class="card__flex-item">
+            <a href="https://wordpress.com/" title="WordPress" target="_blank">
+              <img src="svg/wordpress-logo.svg" class="card__img" />
+            </a>
+          </div>
+          <div class="card__flex-item">
+            <a href="https://magento.com/" title="Magento 2" target="_blank">
+              <img src="svg/magento-logo.svg" class="card__img" />
+            </a>
+          </div>
+          <div class="card__flex-item">
+            <a href="https://www.bigcommerce.com/" title="BigCommerce" target="_blank">
+              <img src="svg/bigcommerce-logo.svg" class="card__img" />
+            </a>
+          </div>
+          <div class="card__flex-item">
+            <a href="https://www.shopify.co.uk/" title="Shopify" target="_blank">
+              <img src="svg/shopify-logo.svg" class="card__img" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+    <div class="card">
+      <h2>Data & Analytics</h2>
+      <div class="card__flex">
+        <div class="card__flex-item">
+          <a href="https://analytics.google.com/analytics/web/" title="Google Analytics" target="_blank">
+            <img src="svg/google-analytics-logo.svg" class="card__img" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://tagmanager.google.com/" title="Google Tag Manager" target="_blank">
+            <img src="svg/google-tag-manager-logo.svg" class="card__img" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://search.google.com/search-console/about" title="Google Search Console" target="_blank">
+            <img src="svg/google-search-console-logo.svg" class="card__img" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://www.crazyegg.com/" title="CrazyEgg" target="_blank">
+            <img src="svg/crazyegg-logo.svg" class="card__img" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>On the Horizon</h2>
+      <div class="card__flex">
+        <div class="card__flex-item">
+          <a href="https://reactjs.org/" title="React" target="_blank">
+            <img src="svg/reactjs-logo.svg" class="card__img" />
+          </a>
+        </div>
+        <div class="card__flex-item">
+          <a href="https://nodejs.org/en/" title="NodeJS" target="_blank">
+            <img src="svg/nodejs-logo.svg" class="card__img" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
     `;
 
   // Contact Content
@@ -289,7 +506,8 @@ const prepareWindowContent = function (windowName) {
 
   // Send to UI
   if (windowName === "about" && windowOpen === false) {
-    createWindow(aboutPagePath, aboutHTMLContent, "about");
+    // createWindow(aboutPagePath, aboutHTMLContent, "about");
+    createSmallWindow(aboutPagePath, aboutHTMLContent, "about");
     prepareTabContent(windowName);
   }
 
@@ -356,12 +574,6 @@ const checkWindowExists = function (windowName) {
   return flag;
 };
 
-const closeWindow = (activeWindow) => (activeWindow.outerHTML = "");
-
-const minimiseWindow = function (activeWindow) {
-  console.log(`This window will be minimised: ${activeWindow}`);
-};
-
 const getCurrentTime = function () {
   let currentDate = new Date();
   const currentTime = new Intl.DateTimeFormat("default", {
@@ -382,60 +594,6 @@ const getCurrentDate = function () {
   const formattedDate = `${day} ${month}`;
   return formattedDate;
 };
-
-const switchWindowZIndex = function (activeWindow) {
-  const allWindows = document.querySelectorAll(".window");
-
-  allWindows.forEach((window) => {
-    window === activeWindow
-      ? window.classList.add("window--active")
-      : window.classList.remove("window--active");
-  });
-};
-
-function dragElement(el) {
-  let pos1 = 0,
-    pos2 = 0,
-    pos3 = 0,
-    pos4 = 0;
-  if (el.querySelector(".window__header")) {
-    // if present, the header is where you move the DIV from:
-    el.querySelector(".window__header").onmousedown = dragMouseDown;
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    el.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
-    el.style.top = el.offsetTop - pos2 + "px";
-    el.style.left = el.offsetLeft - pos1 + "px";
-  }
-
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
 
 // Initialisation
 
