@@ -53,6 +53,15 @@
         <img src="icons/brightness-contrast.png" alt="#" class="icon icon-tray__sound-icon" />
         <img src="icons/switch.png" alt="#" class="icon icon-tray__power-icon" />
         <img src="icons/circle-down.png" alt="#" class="icon icon-tray__menu-icon" />
+        <div class="settings-popup hidden">
+          <div class="settings-popup__brightness">
+            <img src="icons/brightness-contrast.png" alt="#" class="icon icon-tray__sound-icon settings-popup__img" />
+          </div>
+          <div class="settings-popup__power">
+            <img src="icons/switch.png" alt="#" class="icon icon-tray__power-icon settings-popup__img" />
+            <span class="settings-popup__text">Power Off</span>
+          </div>
+        </div>
       </div>
     </div>
     <nav class="side-menu">
@@ -65,9 +74,11 @@
       <div id="skills" class="side-menu__btn">
         <img src="icons/165-layers.png" alt="#" class="side-menu__icon" />
       </div>
+      <a href="mailto:test@test.co.uk">
       <div id="contact" class="side-menu__btn">
         <img src="icons/356-paper plane.png" alt="#" class="side-menu__icon" />
       </div>
+      </a>
       </nav>
     </div>
     <div class="window-container">
@@ -151,6 +162,20 @@
           <p>Nullam nunc ex, laoreet vitae eros a, ullamcorper fermentum metus. Aliquam ut orci nec diam pretium mattis in ac justo. </p>
           <p>Integer non arcu semper, porta ipsum non, tristique elit. Aliquam viverra neque id tincidunt mattis. </p>
           <img src="#" class="card__gif" />
+          <div class="card__btn-container">
+            <a href="#" title="View on Github" target="_blank">
+              <button class="project-btn">
+                <span class="project-btn__text">Live Demo</span>
+                <img src="svg/browser-logo.svg" class="project-btn__img" lazyload="true" />
+              </button>
+            </a>
+            <a href="https://github.com/Xnanga/listo" title="View Live Demo" target="_blank">
+              <button class="project-btn">
+                <span class="project-btn__text">Github</span>
+                <img src="svg/github-logo.svg" class="project-btn__img" lazyload="true" />
+              </button>
+            </a>
+            </div>
         </div>
       </div>
       <div class="card">

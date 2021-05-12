@@ -97,6 +97,44 @@ const removeTab = function (removedWindow) {
   });
 };
 
+const iconHighlight = function (clickedIcon) {
+  let windowExists;
+  const iconId = clickedIcon.id;
+  const allActiveWindows = document.querySelectorAll(".window");
+  allActiveWindows.forEach((window) => {
+    if (window.dataset.id === iconId) windowExists = true;
+  });
+
+  if (windowExists) clickedIcon.classList.add("side-menu__btn--active");
+};
+
+const iconUnhighlight = function (windowName) {
+  const windowId = windowName.dataset.id;
+  const allSideBarIcons = document.querySelectorAll(".side-menu__btn");
+  allSideBarIcons.forEach((icon) => {
+    if (icon.id === windowId) icon.classList.remove("side-menu__btn--active");
+  });
+};
+
+const togglePopupMenu = function () {
+  const popupMenu = document.querySelector(".settings-popup");
+  const iconTray = document.querySelector(".icon-tray");
+
+  popupMenu.classList.toggle("hidden");
+  iconTray.classList.toggle("icon-tray--active");
+};
+
+const removePopupMenu = function (clickedElement) {
+  const popupMenu = document.querySelector(".settings-popup");
+  const iconTray = document.querySelector(".icon-tray");
+
+  console.log(clickedElement);
+  if (clickedElement === popupMenu) return;
+
+  popupMenu.classList.add("hidden");
+  iconTray.classList.remove("icon-tray--active");
+};
+
 const expandCard = function (clickedBtn) {
   const activeCard = clickedBtn.closest(".card");
   const expandableContent = activeCard.querySelector(".card__content");
@@ -107,7 +145,10 @@ const expandCard = function (clickedBtn) {
     : (clickedBtn.textContent = "[+]");
 };
 
-const closeWindow = (activeWindow) => (activeWindow.outerHTML = "");
+const closeWindow = function (activeWindow) {
+  iconUnhighlight(activeWindow);
+  activeWindow.outerHTML = "";
+};
 
 const minimiseWindow = function (activeWindow) {
   console.log(`This window will be minimised: ${activeWindow}`);
@@ -172,6 +213,9 @@ function dragElement(el) {
 const topBarEventHandler = function (e) {
   const clickedEl = e.target;
   const topBar = document.querySelector(".top-strip");
+
+  // THIS NEEDS TWEAKED SO THAT CLICKING MENU DOESN'T CLOSE IT
+  if (!clickedEl.classList.contains("settings-popup")) removePopupMenu();
   if (clickedEl === topBar) return;
 
   // Close Window & Tab
@@ -188,9 +232,13 @@ const topBarEventHandler = function (e) {
       closeWindow(activeWindow);
     }
   }
+
+  // Toggle Popup Menu
+  if (clickedEl.classList.contains("icon-tray")) togglePopupMenu();
 };
 
 const sideBarEventHandler = function (e) {
+  removePopupMenu();
   const clickedEl = e.target;
   const sideBar = document.querySelector(".side-menu");
   if (clickedEl === sideBar) return;
@@ -198,10 +246,13 @@ const sideBarEventHandler = function (e) {
   if (clickedEl.id === "about") prepareWindowContent("about");
   if (clickedEl.id === "portfolio") prepareWindowContent("portfolio");
   if (clickedEl.id === "skills") prepareWindowContent("skills");
-  if (clickedEl.id === "contact") prepareWindowContent("contact");
+  // if (clickedEl.id === "contact") prepareWindowContent("contact");
+
+  iconHighlight(clickedEl);
 };
 
 const windowClickEventHandler = function (e) {
+  removePopupMenu();
   const clickedEl = e.target;
 
   // Close Window & Tab
