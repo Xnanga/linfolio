@@ -32,7 +32,7 @@ button {
 
 p {
   font-size: 1.5rem;
-  margin: 1rem 0; }
+  margin: 1.5rem 0; }
 
 a,
 a:hover,
@@ -231,7 +231,7 @@ a:focus {
       background-color: var(--color-orange-highlight); }
   .window__main {
     height: calc(100% - 3.5rem);
-    padding: 3rem 11.5rem;
+    padding: 3rem 15%;
     overflow-y: scroll; }
   .window--active {
     z-index: 4; }
@@ -267,6 +267,7 @@ a:focus {
       background-color: rgba(255, 255, 255, 0.1); }
 
 .card {
+  width: 100%;
   padding: 1rem;
   border-radius: 5px;
   background-color: var(--color-dark-grey); }
@@ -307,6 +308,39 @@ a:focus {
       border-radius: 50%; }
     .card__img:hover {
       transform: scale(1.1); }
+  .card__btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin: 1rem 0; }
+
+.project-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 16rem;
+  height: 5rem;
+  padding: 1rem;
+  border-radius: 15px;
+  opacity: 0.8;
+  background-color: white;
+  box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  transition: all 0.2s;
+  perspective: 1000px; }
+  .project-btn__text {
+    font-size: 2rem;
+    color: var(--color-dark-grey);
+    pointer-events: none; }
+  .project-btn__img {
+    height: 3rem;
+    width: 3rem;
+    pointer-events: none; }
+  .project-btn:hover {
+    opacity: 1;
+    box-shadow: 5px 5px 3px 0px rgba(0, 0, 0, 0.75);
+    transform: translateY(-5%); }
 
 body {
   height: 100vh;
