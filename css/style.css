@@ -129,6 +129,7 @@ a:focus {
     border-bottom: 3px solid var(--color-orange-highlight); }
 
 .icon-tray {
+  position: relative;
   align-self: flex-end;
   height: 100%;
   display: flex;
@@ -139,15 +140,52 @@ a:focus {
   transition: all 0.1s; }
   .icon-tray > * {
     margin-left: 1rem;
-    opacity: 0.8; }
+    opacity: 0.8;
+    pointer-events: none; }
   .icon-tray:active, .icon-tray:focus {
     border-bottom: 3px solid var(--color-orange-highlight); }
   .icon-tray:hover {
     background-color: rgba(255, 255, 255, 0.1); }
+  .icon-tray--active {
+    border-bottom: 3px solid var(--color-orange-highlight); }
 
 .icon {
   height: 1.75rem;
   width: 1.75rem; }
+
+.settings-popup {
+  position: absolute;
+  top: 4.5rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 22.5rem;
+  height: 10rem;
+  padding: 1.5rem 0;
+  color: var(--color-dark-grey);
+  background-color: #ffffff;
+  border-radius: 5px;
+  transition: all 0.2s; }
+  .settings-popup > div {
+    display: flex;
+    align-items: center;
+    height: 45%;
+    padding: 0 1.5rem; }
+    .settings-popup > div:hover {
+      background-color: #e6e6e6; }
+  .settings-popup__img {
+    margin-right: 1rem;
+    filter: invert(100%); }
+  .settings-popup::before {
+    content: "";
+    position: absolute;
+    top: -1rem;
+    right: 3.5rem;
+    height: 1rem;
+    width: 3rem;
+    background-color: #ffffff;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
 
 .side-menu {
   position: fixed;
@@ -178,6 +216,8 @@ a:focus {
     .side-menu__btn > img {
       pointer-events: none; }
     .side-menu__btn:hover {
+      background-color: rgba(255, 255, 255, 0.1); }
+    .side-menu__btn--active {
       background-color: rgba(255, 255, 255, 0.1); }
   .side-menu__icon {
     height: 6rem;
@@ -231,7 +271,7 @@ a:focus {
       background-color: var(--color-orange-highlight); }
   .window__main {
     height: calc(100% - 3.5rem);
-    padding: 3rem 15%;
+    padding: 3rem 10%;
     overflow-y: scroll; }
   .window--active {
     z-index: 4; }
@@ -308,6 +348,10 @@ a:focus {
       border-radius: 50%; }
     .card__img:hover {
       transform: scale(1.1); }
+  .card__gif {
+    display: block;
+    width: 90%;
+    margin: 0 auto; }
   .card__btn-container {
     display: flex;
     align-items: center;
@@ -371,3 +415,7 @@ h1 {
 h2 {
   font-family: inherit;
   font-size: 2.25rem; }
+
+.hidden {
+  visibility: hidden;
+  opacity: 0; }
