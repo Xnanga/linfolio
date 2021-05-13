@@ -56,6 +56,9 @@
         <div class="settings-popup hidden">
           <div class="settings-popup__brightness">
             <img src="icons/brightness-contrast.png" alt="#" class="icon icon-tray__sound-icon settings-popup__img" />
+            <div class="slider__container">
+              <input type="range" min="50" max="150" value="100" class="slider" id="myRange">
+            </div>
           </div>
           <div class="settings-popup__power">
             <img src="icons/switch.png" alt="#" class="icon icon-tray__power-icon settings-popup__img" />
@@ -84,7 +87,7 @@
     <div class="window-container">
     </div>
   </body>
-  <script id="aboutHTML">
+  <script id="aboutHTML" type="text/html">
     <h1>Hi there! I'm Jamie Peutherer</h1>
     <p>I'm a self-taught frontend web developer with a strong background in technical Search Engine Optimisation (7+ years in the field!).</p>
     <p>I like to build all sorts of odd websites and apps, especially webapp recreations of other tools and programs (<strong>like Ubuntu Linux!</strong>)</p>
@@ -110,12 +113,14 @@
           <span>LinkedIn</span>
         </div>
       </a>
+      <a href="mailto:test@test.co.uk">
       <div class="quicklink-grid__item" id="contact-btn">
         <span>Contact</span>
       </div>
+      </a>
     </div>
   </script>
-  <script id="portfolioHTML">
+  <script id="portfolioHTML" type="text/html">
     <h1>Portfolio</h1>
     <p>Below are some of the projects I've put together that I think showcase what I can do best. You can find even more over on my Github page.</p>
     <div class="card-container">
@@ -225,7 +230,7 @@
       </div>
     </div>
   </script>
-  <script id="skillsHTML">
+  <script id="skillsHTML" type="text/html">
     <h1>Skills & Tech I'm Familiar With</h1>
     <p>Below are web languages, tools, CMSs, and more I know a thing or two about.</p>
     <div class="card-container">
@@ -360,7 +365,7 @@
     </div>
   </div>
   </script>
-  <script id="contactHTML">
+  <script id="contactHTML" type="text/html">
     <h1>Get in Touch</h1>
     <p>TEST</p>
   </script>
