@@ -4,11 +4,17 @@ const init = function () {
   setInterval(updateDate, 1000);
   setInterval(updateTime, 1000);
   setUpEventListeners();
+  sliderHandler();
 
   // prepareWindowContent("about");
 };
 
 // UI
+
+const displayLoginScreen = function () {
+  toggleShutdownPopup();
+  console.log(`Login Screen Init`);
+};
 
 const updateTime = function () {
   const topBarTime = document.querySelector(".date-time__time");
@@ -128,11 +134,33 @@ const removePopupMenu = function (clickedElement) {
   const popupMenu = document.querySelector(".settings-popup");
   const iconTray = document.querySelector(".icon-tray");
 
-  console.log(clickedElement);
   if (clickedElement === popupMenu) return;
 
   popupMenu.classList.add("hidden");
   iconTray.classList.remove("icon-tray--active");
+};
+
+const toggleShutdownPopup = function () {
+  // THIS NEEDS LOOKED AT
+  const existingShutdownPopup = document.querySelector(".shutdown-window");
+  const existingSettingsPopup = document.querySelector(".settings-popup");
+  if (existingSettingsPopup) existingSettingsPopup.classList.add("hidden");
+  if (existingShutdownPopup) {
+    existingShutdownPopup.outerHTML = "";
+  }
+
+  const windowContainer = document.querySelector(".window-container");
+  const shutdownPopupHTML = `
+  <div class="shutdown-window">
+    <span>Are you sure you want to shutdown?</span>
+    <div class="shutdown__btn-container">
+      <button class="shutdown__btn" id="shutdown-btn">Shutdown</button>
+      <button class="shutdown__btn" id="shutdown-cancel-btn">Cancel</button>
+    </div>
+  </div>
+  `;
+
+  windowContainer.insertAdjacentHTML("beforeend", shutdownPopupHTML);
 };
 
 const expandCard = function (clickedBtn) {
@@ -213,9 +241,9 @@ function dragElement(el) {
 const topBarEventHandler = function (e) {
   const clickedEl = e.target;
   const topBar = document.querySelector(".top-strip");
+  console.log(clickedEl);
 
-  // THIS NEEDS TWEAKED SO THAT CLICKING MENU DOESN'T CLOSE IT
-  if (!clickedEl.classList.contains("settings-popup")) removePopupMenu();
+  // if (!clickedEl.classList.contains("settings-popup")) removePopupMenu();
   if (clickedEl === topBar) return;
 
   // Close Window & Tab
@@ -235,6 +263,10 @@ const topBarEventHandler = function (e) {
 
   // Toggle Popup Menu
   if (clickedEl.classList.contains("icon-tray")) togglePopupMenu();
+
+  // Toggle Power Popup
+  if (clickedEl.classList.contains("settings-popup__power"))
+    toggleShutdownPopup();
 };
 
 const sideBarEventHandler = function (e) {
@@ -271,10 +303,16 @@ const windowClickEventHandler = function (e) {
   // Quicklink buttons
   if (clickedEl.id === "portfolio-btn") prepareWindowContent("portfolio");
   if (clickedEl.id === "skills-btn") prepareWindowContent("skills");
-  if (clickedEl.id === "contact-btn") prepareWindowContent("contact");
+  // if (clickedEl.id === "contact-btn") prepareWindowContent("contact");
 
   // Card expand buttons
   if (clickedEl.classList.contains("card__expand-btn")) expandCard(clickedEl);
+
+  // Shutdown buttons
+  if (clickedEl.id === "shutdown-btn") {
+    toggleShutdownPopup();
+    displayLoginScreen();
+  }
 };
 
 const windowMouseDownEventHandler = function (e) {
@@ -282,6 +320,14 @@ const windowMouseDownEventHandler = function (e) {
 
   // Push active window to front
   switchWindowZIndex(clickedEl.closest(".window"));
+};
+
+const sliderHandler = function () {
+  const slider = document.getElementById("myRange");
+
+  slider.oninput = function () {
+    document.documentElement.style.filter = `brightness(${slider.value}%)`;
+  };
 };
 
 const setUpEventListeners = function () {
